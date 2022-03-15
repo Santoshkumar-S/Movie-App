@@ -5,6 +5,20 @@ var express = require('express')
 
 var app = express();
 
+const db = require("./models");
+db.mongoose
+  .connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Connected to the database!");
+    
+  })
+  .catch(err => {
+    console.log("Cannot connect to the database!", err);
+    process.exit();
+  });
 
 app.get('/movie',function(req,res){
     res.send("All Movies Data in JSON format from Mongo DB")
@@ -24,3 +38,5 @@ app.listen(9000, function () {
     console.log("express has started on port 3000");
    });
    
+
+  
