@@ -4,6 +4,8 @@ var express = require("express"),
   path = require("path"),
   cors = require("cors");  //TODO:
 
+  bodyParser = require("body-parser");
+
 
 
 // Running on posrt 9000
@@ -17,6 +19,12 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./models");
 db.mongoose
@@ -51,7 +59,7 @@ app.get("/", (req, res) => {
 require("./routes/movie.routes")(app);
 require("./routes/artist.routes")(app);
 require("./routes/genre.routes")(app);
-// require("./routes/user.routes")(app)
+require("./routes/user.routes")(app)
 
 app.listen(PORT, function () {
   console.log("express has started on port ", PORT);
